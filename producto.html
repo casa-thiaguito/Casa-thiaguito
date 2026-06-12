@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Thiaguito | Detalle del Producto</title>
+
+<!-- Fuente moderna y FontAwesome para íconos profesionales -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --primary: #d9002b;
+  --primary-hover: #b00022;
+  --bg-main: #f8f9fa;
+  --text-dark: #1a1a1a;
+  --text-muted: #6c757d;
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.04);
+  --shadow-md: 0 12px 34px rgba(0,0,0,0.08);
+  --radius-lg: 20px;
+  --radius-md: 12px;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body{
+  background: var(--bg-main);
+  color: var(--text-dark);
+  padding: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAVBAR DE NAVEGACIÓN CON LOGO INCORPORADO */
+.nav-header {
+  max-width: 500px;
+  margin: 0 auto 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 10px 15px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-back {
+  background: #f8f9fa;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-back:hover { color: var(--primary); background: #feecef; }
+
+/* LOGO RESCALADO */
+.logo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-nav img {
+  height: 45px;
+  max-width: 120px;
+  object-fit: contain;
+  display: block;
+}
+
+.cart-icon {
+  background: #f8f9fa;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--text-dark);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+.cart-icon:hover { color: var(--primary); background: #feecef; }
+
+.cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--primary);
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid white;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.container{
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.img-wrapper {
+  width: 100%;
+  height: 320px;
+  background: #f8f9fa;
+  overflow: hidden;
+}
+
+img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info{
+  padding: 24px;
+}
+
+.nombre{
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.precio{
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.total{
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--primary);
+  border-top: 1px solid #f1f3f5;
+  padding-top: 15px;
+  margin: 15px 0;
+}
+
+/* CONTROLADOR DE CANTIDAD */
+.cantidad{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f1f3f5;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  margin: 20px 0;
+}
+
+.cant-label {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-dark);
+}
+
+.selectors {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.small{
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-dark);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.small:hover { background: var(--primary); color: white; }
+
+#cant{
+  font-size: 18px;
+  font-weight: 800;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* BOTONES DE ACCIÓN */
+.add{
+  width: 100%;
+  padding: 15px;
+  border: 2px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+.add:hover { background: #feecef; }
+
+.buy{
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(217, 0, 43, 0.2);
+  transition: all 0.2s;
+}
+.buy:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+/* POPUP REFINADO */
+.popup-bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup{
+  background: white;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  width: 85%;
+  max-width: 320px;
+  box-shadow: var(--shadow-md);
+  animation: popupScale 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popupScale {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.popup-icon {
+  width: 50px;
+  height: 50px;
+  background: #e8f7ee;
+  color: #11783b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 15px auto;
+}
+
+.popup h2{
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.popup p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.popup-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-popup-primary {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-popup-secondary {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid #e9ecef;
+  background: white;
+  color: var(--text-dark);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn-popup-secondary:hover { background: #f8f9fa; }
+
+/* ERROR STATE */
+.error-box {
+  text-align: center;
+  padding: 40px 20px;
+}
+.error-box h2 { font-size: 20px; margin-bottom: 10px; }
+.error-box button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  margin-top: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR ACCESOS RÁPIDOS CON LOGO INTEGRADO -->
+<div class="nav-header">
+  <button class="btn-back" onclick="location.href='index.html'">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <div class="logo-nav">
+    <img src="Casa thiaguito.png" alt="Casa Thiaguito">
+  </div>
+  <button class="cart-icon" onclick="location.href='carrito.html'">
+    <i class="fa-solid fa-bag-shopping"></i>
+    <div class="cart-badge" id="cart-count">0</div>
+  </button>
+</div>
+
+<!-- CONTENEDOR PRODUCTO -->
+<div class="container" id="main-container">
+  <div class="img-wrapper">
+    <img id="img" alt="Cargando producto...">
+  </div>
+
+  <div class="info">
+    <div class="nombre" id="nombre"></div>
+    <div class="precio" id="precio"></div>
+    
+    <!-- CONTROLADOR CANTIDAD -->
+    <div class="cantidad">
+      <span class="cant-label">Cantidad</span>
+      <div class="selectors">
+        <button class="small" onclick="menos()">-</button>
+        <span id="cant">1</span>
+        <button class="small" onclick="mas()">+</button>
+      </div>
+    </div>
+
+    <!-- TOTAL DINÁMICO -->
+    <div class="total" id="total"></div>
+
+    <!-- BOTONES ACCIÓN -->
+    <button class="add" onclick="addCart()">
+      <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+    </button>
+
+    <button class="buy" onclick="buyNow()">
+      <i class="fa-solid fa-bolt"></i> Comprar ahora
+    </button>
+  </div>
+</div>
+
+<!-- POPUP MODERNO -->
+<div class="popup-bg" id="popup">
+  <div class="popup">
+    <div class="popup-icon">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <h2>¡Agregado con éxito!</h2>
+    <p>El producto ya está listo en tu carrito.</p>
+    
+    <div class="popup-buttons">
+      <button class="btn-popup-primary" onclick="location.href='carrito.html'">
+        Ver mi Carrito
+      </button>
+      <button class="btn-popup-secondary" onclick="cerrarPopup()">
+        Seguir Comprando
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// 📦 BASE DE DATOS DE PRODUCTOS SINCRONIZADA CON EL INDEX
+const productos = [
+  {id:1, nombre:"reflector luz fria 200w", img:"luz fria 200w.jpg", precio:130000},
+  {id:2, nombre:"Reflectorluz fria 20w", img:"luz fria 20w.jpg", precio:45000},
+  {id:3, nombre:"Reflector 50w luz fria", img:"luz fria 50w.jpg", precio:75000},
+  {id:4, nombre:"Reflector LED 50w luz fria", img:"led50w.jpg", precio:85000},
+  {id:5, nombre:"Reflector Rgb 50w", img:"rgb50w.jpg", precio:95000},
+  {id:6, nombre:"Reflector LED 500w luz fria", img:"500w.jpg", precio:290000},
+  {id:7, nombre:"Reflector LED 300w luz fria", img:"300w.jpg", precio:200000},
+  {id:8, nombre:"Reflector LED 100w luz fria", img:"100w.jpg", precio:180000},
+    {id:9, nombre:"Reflector LED 30w luz calida", img:"30wcalida.jpg", precio:65000},
+  
+];
+
+// OBTENER ID PASADO POR URL
+const params = new URLSearchParams(window.location.search);
+const id = parseInt(params.get("id"));
+const prod = productos.find(p => p.id === id);
+
+// MANEJO DE ERROR SI EL PRODUCTO NO SE ENCUENTRA
+if(!prod){
+  document.getElementById("main-container").innerHTML = `
+    <div class="error-box">
+      <i class="fa-solid fa-triangle-exclamation" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
+      <h2>Producto no encontrado</h2>
+      <p>El artículo solicitado no existe o fue removido.</p>
+      <button onclick="location.href='index.html'">Volver al inicio</button>
+    </div>
+  `;
+} else {
+  // MONTAR INFORMACIÓN EN EL HTML
+  document.getElementById("img").src = prod.img;
+  document.getElementById("nombre").innerText = prod.nombre;
+  document.getElementById("precio").innerText = "Precio unitario: " + prod.precio.toLocaleString() + " Gs";
+}
+
+let cantidad = 1;
+
+// RE-CALCULAR E IMPRIMIR EL TOTAL
+function updateTotal(){
+  if(!prod) return;
+  let total = prod.precio * cantidad;
+  document.getElementById("cant").innerText = cantidad;
+  document.getElementById("total").innerText = "Total: " + total.toLocaleString() + " Gs";
+}
+
+// SUMAR
+function mas(){
+  cantidad++;
+  updateTotal();
+}
+
+// RESTAR
+function menos(){
+  if(cantidad > 1){
+    cantidad--;
+    updateTotal();
+  }
+}
+
+// ACTUALIZAR CIRCULITO FLOTANTE DEL NAVBAR
+function actualizarMiniContador() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let totalItems = cart.reduce((suma, p) => suma + p.cantidad, 0);
+  let badge = document.getElementById("cart-count");
+  
+  if(badge) {
+    badge.innerText = totalItems;
+    if(totalItems === 0) {
+      badge.style.display = "none";
+    } else {
+      badge.style.display = "flex";
+    }
+  }
+}
+
+// 🛒 ACCIÓN: AGREGAR AL CARRITO
+function addCart(){
+  if(!prod) return;
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let item = cart.find(p => p.id === prod.id);
+
+  if(item){
+    item.cantidad += cantidad;
+  } else {
+    cart.push({
+      id: prod.id,
+      nombre: prod.nombre,
+      precio: prod.precio,
+      cantidad: cantidad
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  
+  // Actualizar el circulito al instante sin recargar la web
+  actualizarMiniContador();
+  
+  // Mostrar el popup moderno
+  document.getElementById("popup").style.display = "flex";
+}
+
+// CERRAR POPUP
+function cerrarPopup(){
+  document.getElementById("popup").style.display = "none";
+}
+
+// ⚡ ACCIÓN: COMPRAR AHORA
+function buyNow(){
+  if(!prod) return;
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let item = cart.find(p => p.id === prod.id);
+
+  if(item){
+    item.cantidad += cantidad;
+  } else {
+    cart.push({
+      id: prod.id,
+      nombre: prod.nombre,
+      precio: prod.precio,
+      cantidad: cantidad
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  window.location.href = "carrito.html";
+}
+
+// INICIALIZADORES AL ENTRAR A LA PÁGINA
+updateTotal();
+actualizarMiniContador();
+</script>
+
+</body>
+</html>
