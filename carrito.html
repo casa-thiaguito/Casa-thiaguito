@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Thiaguito | Tu Carrito</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+:root {
+  --primary: #d9002b;
+  --primary-hover: #b00022;
+  --bg-main: #f8f9fa;
+  --text-dark: #1a1a1a;
+  --text-muted: #6c757d;
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.04);
+  --shadow-md: 0 12px 34px rgba(0,0,0,0.08);
+  --radius-lg: 20px;
+  --radius-md: 12px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body{
+  background: var(--bg-main);
+  color: var(--text-dark);
+  padding: 0 12px 40px 12px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER CON LOGO OFICIAL */
+.top-nav {
+  background: white;
+  padding: 12px 20px;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.02);
+  margin-left: -12px;
+  margin-right: -12px;
+  margin-bottom: 25px;
+}
+
+.top-nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo img {
+  height: 67px;
+  max-width: 150px;
+  object-fit: contain;
+  display: block;
+}
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 14px;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.btn-back:hover { color: var(--primary); }
+
+/* SECCIÓN TÍTULO INTERNO */
+.cart-title-section {
+  max-width: 600px;
+  margin: 0 auto 20px auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-title-section i {
+  font-size: 24px;
+  color: var(--primary);
+}
+
+.cart-title-section h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.container{
+  max-width: 600px;
+  margin: auto;
+}
+
+/* TARJETAS DE PRODUCTO */
+.item{
+  background: white;
+  padding: 18px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.02);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.item-info {
+  flex-grow: 1;
+}
+
+.item-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.item-qty {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.item-subtotal {
+  font-weight: 800;
+  color: var(--primary);
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.remove{
+  background: #feecef;
+  color: var(--primary);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.remove:hover {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* TOTAL DE COMPRA */
+.total-box {
+  background: white;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 5px solid var(--primary);
+}
+
+.total-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.total-amount {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+/* FORMULARIO DE CHECKOUT */
+form{
+  background: white;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+form h3{
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+form h3 i { color: var(--primary); }
+
+.input-group {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+input, select{
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid #e9ecef;
+  font-size: 14px;
+  background: #f8f9fa;
+  transition: all 0.2s;
+  color: var(--text-dark);
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(217, 0, 43, 0.1);
+}
+
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+}
+
+/* CONTENEDOR DINÁMICO COMPROBANTE Y DATOS DE CUENTA */
+.comprobante-box {
+  display: none;
+  background: #fff5f6;
+  border: 1.5px dashed var(--primary);
+  padding: 18px;
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+  animation: fadeIn 0.3s ease;
+}
+
+.datos-cuenta-box {
+  background: white;
+  border: 1px solid #ffccd3;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+}
+
+.datos-cuenta-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.datos-cuenta-title i { color: var(--primary); }
+
+.datos-cuenta-text {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.comprobante-box label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.comprobante-box input[type="file"] {
+  background: white;
+  padding: 8px;
+  font-size: 13px;
+}
+
+/* BOTÓN PRINCIPAL */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-submit:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(217, 0, 43, 0.2);
+}
+
+/* POPUP PREMIUM */
+.popup-bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup{
+  background: white;
+  padding: 35px 25px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  max-width: 340px;
+  width: 90%;
+  animation: popupScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popupScale {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.popup-icon {
+  width: 60px;
+  height: 60px;
+  background: #e8f7ee;
+  color: #11783b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin: 0 auto 20px auto;
+}
+
+.popup h2{ 
+  font-size: 22px; 
+  font-weight: 800; 
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.popup p{ 
+  font-size: 14px; 
+  color: var(--text-muted); 
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.popup button {
+  background: var(--text-dark);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+.popup button:hover {
+  background: #000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-nav">
+  <div class="top-nav-container">
+    <div class="btn-back" onclick="volverInicio()">
+      <i class="fa-solid fa-arrow-left"></i> Volver
+    </div>
+    <div class="logo">
+      <img src="Casa thiaguito.png" alt="Casa Thiaguito">
+    </div>
+    <div style="width: 60px;"></div>
+  </div>
+</div>
+
+<div class="cart-title-section">
+  <i class="fa-solid fa-bag-shopping"></i>
+  <h1>Tu carrito</h1>
+</div>
+
+<div class="container">
+
+  <div id="lista"></div>
+  
+  <div class="total-box">
+    <div class="total-label">Total general</div>
+    <div class="total-amount" id="total">0 Gs</div>
+  </div>
+
+  <form id="checkoutForm">
+    <h3><i class="fa-solid fa-address-card"></i> Datos de compra</h3>
+
+    <div class="input-group">
+      <input type="text" id="nombre" placeholder="Nombre y apellido" required>
+    </div>
+    
+    <div class="input-group">
+      <input type="email" id="email" placeholder="Correo electrónico" required>
+    </div>
+
+    <div class="input-group">
+      <select id="pago" onchange="evaluarMetodoPago()" required>
+        <option value="">Método de pago</option>
+        <option value="Efectivo">Efectivo</option>
+        <option value="Transferencia">Transferencia</option>
+      </select>
+    </div>
+
+    <div class="comprobante-box" id="comprobanteContainer">
+      <div class="datos-cuenta-box">
+        <div class="datos-cuenta-title"><i class="fa-solid fa-university"></i> Datos de cuenta</div>
+        <div class="datos-cuenta-text">
+          <strong>Banco:</strong> Ueno Bank<br>
+          <strong>Alias:</strong> +595971622612<br>
+          <strong>Titular:</strong> Thiago Diosnel Pane Gomez
+        </div>
+      </div>
+      <label for="comprobante"><i class="fa-solid fa-paperclip"></i> Coloque aquí su comprobante (Obligatorio)</label>
+      <input type="file" id="comprobante" accept="image/*">
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="direccion" placeholder="Dirección de envío (Opcional)">
+    </div>
+
+    <div class="input-group">
+      <select id="entrega" required>
+        <option value="">Tipo de entrega</option>
+        <option value="Delivery">Delivery</option>
+        <option value="Pick up">Pick up (Retiro en local)</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-submit">
+      <i class="fa-solid fa-circle-check"></i> Finalizar compra
+    </button>
+  </form>
+
+</div>
+
+<div class="popup-bg" id="popup">
+  <div class="popup">
+    <div class="popup-icon">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <h2>¡Pedido Enviado!</h2>
+    <p id="popupMensaje">Tu orden ha sido procesada con éxito. Nos comunicaremos con vos a la brevedad.</p>
+    <button id="popupBtn" onclick="cerrarPopup()">Aceptar y regresar</button>
+  </div>
+</div>
+
+<script>
+// 🔥 ACTUALIZADO CON TU NUEVA PUBLIC KEY
+emailjs.init("9E38-ZDKKuJJZSuiU");
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function render(){
+  let html = "";
+  let total = 0;
+
+  if(cart.length === 0) {
+    document.getElementById("lista").innerHTML = `
+      <div style="text-align: center; background: white; padding: 40px 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); color: var(--text-muted); font-size: 14px;">
+        <i class="fa-solid fa-basket-shopping" style="font-size: 32px; color: #e9ecef; margin-bottom: 12px; display: block;"></i>
+        Tu carrito está vacío. ¡Agregá productos desde el inicio!
+      </div>
+    `;
+    document.getElementById("total").innerText = "0 Gs";
+    document.querySelector(".btn-submit").disabled = true;
+    document.querySelector(".btn-submit").style.opacity = "0.5";
+    document.querySelector(".btn-submit").style.cursor = "not-allowed";
+    return;
+  }
+
+  cart.forEach((p, i)=>{
+    let subtotal = p.precio * p.cantidad;
+    total += subtotal;
+
+    html += `
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">${p.nombre}</div>
+          <div class="item-qty">Cantidad: ${p.cantidad}</div>
+          <div class="item-subtotal">${subtotal.toLocaleString()} Gs</div>
+        </div>
+        <button class="remove" title="Eliminar artículo" onclick="removeItem(${i})">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+    `;
+  });
+
+  document.getElementById("lista").innerHTML = html;
+  document.getElementById("total").innerText = total.toLocaleString() + " Gs";
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  render();
+}
+
+function evaluarMetodoPago() {
+  const pago = document.getElementById("pago").value;
+  const container = document.getElementById("comprobanteContainer");
+  const inputComprobante = document.getElementById("comprobante");
+
+  if(pago === "Transferencia") {
+    container.style.display = "block";
+    inputComprobante.required = true;
+  } else {
+    container.style.display = "none";
+    inputComprobante.required = false;
+    inputComprobante.value = ""; 
+  }
+}
+
+// 🔥 COMPRESIÓN MÁXIMA OPTIMIZADA PARA LA NUEVA KEY
+function convertirImagenABase64(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) resolve("");
+    
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(event) {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = function() {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        // Reducción estratégica de tamaño de píxeles para bajar el peso del string Base64
+        const MAX_WIDTH = 450; 
+        const MAX_HEIGHT = 450;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Calidad 0.22: Súper liviano y legible, ideal para evitar bloqueos en la API de Gmail
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.22); 
+        resolve(dataUrl);
+      };
+    };
+    reader.onerror = error => reject(error);
+  });
+}
+
+document.getElementById("checkoutForm")
+.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  let nombre = document.getElementById("nombre").value;
+  let email = document.getElementById("email").value;
+  let pago = document.getElementById("pago").value;
+  let direccion = document.getElementById("direccion").value || "No especificada";
+  let entrega = document.getElementById("entrega").value;
+  let fileInput = document.getElementById("comprobante").files[0];
+
+  let productosTexto = cart.map(p =>
+    `• ${p.nombre} x${p.cantidad} = ${(p.precio * p.cantidad).toLocaleString()} Gs`
+  ).join("\n");
+
+  let total = cart.reduce((a,p)=> a + p.precio * p.cantidad, 0).toLocaleString();
+
+  const btnSubmit = document.querySelector(".btn-submit");
+  btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Procesando...`;
+  btnSubmit.disabled = true;
+
+  let base64Comprobante = "";
+  if (pago === "Transferencia" && fileInput) {
+    try {
+      base64Comprobante = await convertirImagenABase64(fileInput);
+    } catch (err) {
+      console.error("Error al procesar la imagen:", err);
+    }
+  }
+
+  let procesado = false;
+
+  function finalizarFlujoCompra() {
+    if (procesado) return;
+    procesado = true;
+    
+    localStorage.removeItem("cart");
+    cart = [];
+    render();
+
+    document.getElementById("popupMensaje").innerText = "Tu orden ha sido procesada con éxito. Nos comunicaremos con vos a la brevedad.";
+    document.getElementById("popupBtn").innerText = "Aceptar y regresar";
+    document.getElementById("popupBtn").onclick = function() {
+      cerrarPopup();
+    };
+    
+    document.getElementById("popup").style.display = "flex";
+  }
+
+  // Respaldo de seguridad por tiempo de respuesta
+  const fallbackTimeout = setTimeout(() => {
+    console.log("Bypass de tiempo activado.");
+    finalizarFlujoCompra();
+  }, 4000);
+
+  // 🔥 ACTUALIZADO CON TU SERVICE_ID Y TU NUEVA PLANTILLA
+  emailjs.send(
+    "service_eeinoyp",
+    "template_j4w6dx9",
+    {
+      nombre: nombre,
+      email: email,
+      pago: pago,
+      direccion: direccion,
+      entrega: entrega,
+      productos: productosTexto,
+      total: total,
+      comprobante_adjunto: base64Comprobante 
+    }
+  ).then(()=>{
+    clearTimeout(fallbackTimeout);
+    finalizarFlujoCompra();
+  }).catch(err=>{
+    clearTimeout(fallbackTimeout);
+    console.log("Error controlado de envío:", err);
+    finalizarFlujoCompra();
+  });
+});
+
+function volverInicio() {
+  window.location.replace("index.html?v=" + Date.now());
+}
+
+function cerrarPopup(){
+  document.getElementById("popup").style.display = "none";
+  volverInicio();
+}
+
+render();
+</script>
+
+</body>
+</html>

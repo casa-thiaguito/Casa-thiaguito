@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Thiaguito | Tienda Oficial</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --primary: #d9002b;
+  --bg-main: #f8f9fa;
+  --text-dark: #1a1a1a;
+  --text-muted: #6c757d;
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.04);
+  --shadow-md: 0 12px 34px rgba(0,0,0,0.08);
+  --radius-lg: 20px;
+  --radius-md: 12px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+body{ background: var(--bg-main); color: var(--text-dark); overflow-x:hidden; }
+
+.promo-bar { background: var(--primary); color: white; text-align: center; padding: 8px; font-size: 12px; font-weight: 700; }
+.top{ background: white; padding: 12px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 10px rgba(0,0,0,0.02); }
+.menu{ display:flex; align-items:center; justify-content:space-between; max-width: 1200px; margin: 0 auto; }
+.logo img{ height: 67px; max-width: 150px; object-fit: contain; }
+.burger{ font-size: 22px; cursor: pointer; padding: 5px; }
+.cart{ cursor: pointer; position: relative; padding: 5px; font-size: 20px; }
+.cart-badge { position: absolute; top: -2px; right: -4px; background: var(--primary); color: white; font-size: 10px; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+.controls-container { max-width: 1200px; margin: 0 auto; }
+
+.categorias-wrapper { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+  margin-top: 15px; 
+}
+
+@media(min-width: 768px) {
+  .categorias-wrapper { 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: space-between; 
+  }
+}
+
+.categorias{ 
+  display: flex; 
+  gap: 8px; 
+  overflow-x: auto; 
+  padding-bottom: 5px; 
+  width: 100%;
+}
+.categorias::-webkit-scrollbar { display: none; }
+
+.cat{ 
+  background: #f1f3f5; 
+  padding: 10px 18px; 
+  border-radius: 40px; 
+  white-space: nowrap; 
+  cursor: pointer; 
+  font-size: 13px; 
+  font-weight: 600; 
+  color: var(--text-muted); 
+  text-transform: capitalize; 
+  flex-shrink: 0;
+}
+.active{ background: var(--primary) !important; color: white !important; }
+
+.ordenar-select { 
+  background: #f1f3f5; 
+  border: none; 
+  padding: 10px 14px; 
+  border-radius: 40px; 
+  font-size: 13px; 
+  font-weight: 600; 
+  cursor: pointer; 
+  outline: none; 
+  width: 100%;
+}
+@media(min-width: 768px) {
+  .ordenar-select { width: auto; min-width: 180px; }
+}
+
+.store-slogan { margin-top: 15px; text-align: center; font-size: 13px; font-weight: 600; color: var(--text-muted); font-style: italic; }
+
+.search{ margin-top: 12px; position: relative; }
+.search input{ width: 100%; padding: 12px 16px; border-radius: var(--radius-md); border: 1.5px solid #e9ecef; font-size: 14px; background: #f8f9fa; }
+.search-results{ position: absolute; top: 52px; left: 0; width: 100%; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-md); overflow: hidden; display: none; z-index: 500; }
+.result-item{ display: flex; align-items: center; gap: 15px; padding: 12px 20px; border-bottom: 1px solid #f1f3f5; cursor: pointer; }
+.result-item img{ width: 44px; height: 44px; object-fit: cover; border-radius: 8px; }
+
+.titulo{ max-width: 1200px; margin: 0 auto; padding: 30px 20px 10px; display: flex; align-items: center; gap: 15px; }
+.titulo-icon-box { width: 44px; height: 44px; background: #feecef; color: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.titulo h1{ font-size: 24px; font-weight: 800; text-transform: uppercase; }
+
+.productos{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+@media(min-width: 768px) { .productos { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+
+.producto{ background: white; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
+.img-wrapper { width: 100%; height: 180px; overflow: hidden; background: #f8f9fa; }
+.producto img{ width: 100%; height: 100%; object-fit: cover; }
+.info-producto { padding: 14px; display: flex; flex-direction: column; flex-grow: 1; }
+.nombre{ font-weight: 600; font-size: 14px; margin-bottom: 6px; height: 38px; overflow: hidden; }
+.precio{ color: var(--text-dark); font-weight: 800; font-size: 15px; margin-top: auto; }
+
+.sidebar{ position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: white; z-index: 1000; padding: 30px 24px; transition: 0.3s; box-shadow: var(--shadow-md); }
+.sidebar a{ display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-dark); font-weight: 600; padding: 14px 0; border-bottom: 1px solid #f1f3f5; cursor: pointer; text-transform: capitalize; }
+.overlay{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.25); display: none; z-index: 900; }
+
+.footer{ background: white; margin-top: 60px; padding: 40px 20px; border-top: 1px solid #e9ecef; position: relative; }
+.btn-admin-lock { position: absolute; bottom: 15px; right: 15px; background: transparent; border: none; color: #d1d5db; font-size: 14px; cursor: pointer; }
+
+/* MODAL ADMIN */
+.modal-admin-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 2000; }
+.modal-admin { background: white; padding: 25px; border-radius: var(--radius-lg); max-width: 450px; width: 90%; max-height: 90vh; overflow-y: auto; }
+.modal-admin .form-group { margin-bottom: 12px; }
+.modal-admin label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+.modal-admin input, .modal-admin select { width: 100%; padding: 10px 12px; border-radius: var(--radius-md); border: 1.5px solid #e9ecef; font-size: 13px; outline: none; }
+.admin-actions { display: flex; gap: 10px; margin-top: 18px; }
+.btn-admin-save { flex: 1; padding: 12px; background: var(--primary); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; }
+.btn-admin-close { flex: 1; padding: 12px; background: #e9ecef; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; }
+.btn-admin-danger { width: 100%; margin-top: 12px; padding: 10px; background: #ffe3e3; color: #d9002b; border: 1px solid #ffc9c9; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; font-size: 12px; }
+.btn-admin-danger:hover { background: #d9002b; color: white; }
+.btn-single-delete { padding: 10px; background: #d9002b; color: white; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; font-size: 12px; white-space: nowrap; }
+</style>
+</head>
+
+<body>
+
+<div class="promo-bar"><i class="fa-solid fa-truck-fast"></i> ¡Envíos rápidos a San Lorenzo y Nanawa!</div>
+
+<div class="sidebar" id="sidebar">
+  <h2>Casa Thiaguito</h2>
+  <div id="sidebar-menu" style="margin-top:20px;"></div>
+</div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="top">
+  <div class="menu">
+    <div class="burger" onclick="openMenu()"><i class="fa-solid fa-bars"></i></div>
+    <div class="logo"><img src="Casa thiaguito.png" alt="Casa Thiaguito"></div>
+    <div class="cart" onclick="location.href='carrito.html'">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <div class="cart-badge" id="cart-count">0</div>
+    </div>
+  </div>
+
+  <div class="controls-container">
+    <div class="categorias-wrapper">
+      <div class="categorias" id="contenedor-categorias"></div>
+      <div>
+        <select class="ordenar-select" id="ordenar" onchange="ordenarProductos()">
+          <option value="predeterminado">Ordenar por</option>
+          <option value="menor-mayor">Precio: Menor a Mayor</option>
+          <option value="mayor-menor">Precio: Mayor a Menor</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="store-slogan">Iluminando tus espacios con la mejor calidad y precio</div>
+
+    <div class="search">
+      <input type="text" id="buscador" placeholder="¿Qué estás buscando hoy?" autocomplete="off">
+      <div class="search-results" id="results"></div>
+    </div>
+  </div>
+</div>
+
+<div class="titulo">
+  <div class="titulo-icon-box"><i class="fa-solid fa-layer-group"></i></div>
+  <div>
+    <h1 id="titulo-nombre">Inicio</h1>
+    <p id="titulo-descripcion">Descubrí lo último que llegó a nuestra tienda.</p>
+  </div>
+</div>
+
+<div class="productos" id="contenedor"></div>
+
+<div class="footer">
+  <h1>Casathiaguito</h1>
+  <p>Tu tienda de confianza en artículos de iluminación.</p>
+  <button class="btn-admin-lock" onclick="solicitarAccesoAdmin()"><i class="fa-solid fa-lock"></i></button>
+</div>
+
+<!-- MODAL CREADOR Y GESTOR DE PRODUCTOS -->
+<div class="modal-admin-bg" id="modalAdmin">
+  <div class="modal-admin">
+    <h2><i class="fa-solid fa-box-open"></i> Panel del Dueño</h2>
+    
+    <!-- SELECCIONAR PRODUCTO PARA EDITAR O BORRAR -->
+    <div class="form-group" style="background: #f8f9fa; padding: 12px; border-radius: 12px; margin-bottom: 15px;">
+      <label style="color: var(--primary);">Modificar o Borrar un Producto Existente:</label>
+      <div style="display: flex; gap: 8px;">
+        <select id="selectEditar" onchange="cargarDatosProducto()">
+          <option value="">-- Seleccionar producto --</option>
+        </select>
+        <button type="button" class="btn-single-delete" onclick="borrarProductoIndividual()"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>
+
+    <!-- FORMULARIO DE AGREGAR / EDITAR -->
+    <input type="hidden" id="editId" value="">
+    
+    <div class="form-group">
+      <label>Nombre del producto</label>
+      <input type="text" id="adminNombre" placeholder="Ej: Reflector LED 150W">
+    </div>
+    
+    <div class="form-group">
+      <label>Categoría</label>
+      <input type="text" id="adminCat" placeholder="Ej: Herramientas, Luces, Cables...">
+    </div>
+
+    <div class="form-group">
+      <label>Precio (Gs)</label>
+      <input type="number" id="adminPrecio" placeholder="Ej: 110000">
+    </div>
+
+    <div class="form-group">
+      <label>Elegir foto del dispositivo</label>
+      <input type="file" id="adminFile" accept="image/*">
+    </div>
+
+    <div class="form-group">
+      <label>O colocar Link de Imagen (URL)</label>
+      <input type="text" id="adminUrl" placeholder="https://ejemplo.com/foto.jpg">
+    </div>
+
+    <div class="admin-actions">
+      <button type="button" class="btn-admin-close" onclick="cerrarModalAdmin()">Cancelar</button>
+      <button type="button" class="btn-admin-save" id="btnGuardar" onclick="guardarProducto()">Guardar Producto</button>
+    </div>
+
+    <hr style="margin-top:15px; border:none; border-top:1px solid #eee;">
+
+    <button type="button" class="btn-admin-danger" onclick="borrarTodo()">
+      <i class="fa-solid fa-trash-can"></i> Borrar absolutamente todo (Reiniciar 0)
+    </button>
+  </div>
+</div>
+
+<script src="productos.js"></script>
+
+<script>
+let actual = "todos";
+
+function obtenerCategorias() {
+  const catsDefault = ["todos"];
+  const catsProductos = productos.map(p => p.cat ? p.cat.toLowerCase().trim() : "");
+  return [...new Set([...catsDefault, ...catsProductos])].filter(Boolean);
+}
+
+function renderBarraCategorias() {
+  const lista = obtenerCategorias();
+  const contHeader = document.getElementById("contenedor-categorias");
+  const contSidebar = document.getElementById("sidebar-menu");
+
+  contHeader.innerHTML = "";
+  contSidebar.innerHTML = "";
+
+  lista.forEach(cat => {
+    let nombreMostrar = cat === "todos" ? "Inicio" : cat;
+    
+    const badge = document.createElement("div");
+    badge.className = `cat ${actual === cat ? "active" : ""}`;
+    badge.innerText = nombreMostrar;
+    badge.onclick = () => filter(cat);
+    contHeader.appendChild(badge);
+
+    const link = document.createElement("a");
+    link.innerHTML = `<i class="fa-solid fa-tag"></i> ${nombreMostrar}`;
+    link.onclick = () => filter(cat);
+    contSidebar.appendChild(link);
+  });
+}
+
+function render(list){
+  let cont = document.getElementById("contenedor");
+  cont.innerHTML = "";
+
+  if(list.length === 0){
+    cont.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">No hay productos guardados todavía. Tocá el candado para agregar el primero.</div>`;
+    return;
+  }
+
+  list.forEach(p => {
+    cont.innerHTML += `
+      <div class="producto" onclick="openProduct(${p.id})">
+        <div class="img-wrapper">
+          <img src="${p.img || 'https://via.placeholder.com/150'}" alt="${p.nombre}">
+        </div>
+        <div class="info-producto">
+          <div class="nombre">${p.nombre}</div>
+          <div class="precio">${Number(p.precio).toLocaleString()} Gs</div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function aplicarFiltroYOrden() {
+  let filtrados = actual === "todos" 
+    ? [...productos] 
+    : productos.filter(p => p.cat && p.cat.toLowerCase().trim() === actual);
+  
+  const criterio = document.getElementById("ordenar").value;
+  if (criterio === "menor-mayor") filtrados.sort((a, b) => a.precio - b.precio);
+  if (criterio === "mayor-menor") filtrados.sort((a, b) => b.precio - a.precio);
+
+  render(filtrados);
+}
+
+function filter(cat){
+  actual = cat.toLowerCase().trim();
+  closeMenu();
+  renderBarraCategorias();
+
+  document.getElementById("titulo-nombre").textContent = actual === "todos" ? "Inicio" : actual;
+  document.getElementById("titulo-descripcion").textContent = `Productos en la categoría ${actual}.`;
+
+  aplicarFiltroYOrden();
+}
+
+function ordenarProductos() { aplicarFiltroYOrden(); }
+function openProduct(id){ window.location.href = "producto.html?id=" + id; }
+function openMenu(){ document.getElementById("sidebar").style.left = "0px"; document.getElementById("overlay").style.display = "block"; }
+function closeMenu(){ document.getElementById("sidebar").style.left = "-300px"; document.getElementById("overlay").style.display = "none"; }
+
+function actualizarContadorCarrito() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let totalItems = cart.reduce((suma, p) => suma + p.cantidad, 0);
+  let badge = document.getElementById("cart-count");
+  if(badge) {
+    badge.innerText = totalItems;
+    badge.style.display = totalItems === 0 ? "none" : "flex";
+  }
+}
+
+// BUSCADOR
+document.getElementById("buscador").addEventListener("input", e => {
+  let val = e.target.value.toLowerCase();
+  const results = document.getElementById("results");
+  if(val === ""){ results.style.display = "none"; return; }
+
+  let encontrados = productos.filter(p => p.nombre.toLowerCase().includes(val));
+  results.innerHTML = "";
+
+  if(encontrados.length === 0){
+    results.innerHTML = `<div class="result-item">No se encontraron productos</div>`;
+  } else {
+    encontrados.forEach(p => {
+      results.innerHTML += `
+        <div class="result-item" onclick="openProduct(${p.id})">
+          <img src="${p.img || 'https://via.placeholder.com/150'}">
+          <div>
+            <div style="font-weight:600">${p.nombre}</div>
+            <div style="color:var(--primary); font-weight:700">${Number(p.precio).toLocaleString()} Gs</div>
+          </div>
+        </div>
+      `;
+    });
+  }
+  results.style.display = "block";
+});
+
+// MODAL ADMIN Y EDICIÓN/BORRADO
+function solicitarAccesoAdmin() {
+  const pin = prompt("Ingrese el PIN de dueño:");
+  if (pin === "0000") {
+    poblarSelectEditar();
+    document.getElementById("modalAdmin").style.display = "flex";
+  } else if(pin !== null) {
+    alert("PIN incorrecto.");
+  }
+}
+
+function poblarSelectEditar() {
+  const select = document.getElementById("selectEditar");
+  select.innerHTML = `<option value="">-- Seleccionar producto --</option>`;
+  productos.forEach(p => {
+    select.innerHTML += `<option value="${p.id}">${p.nombre}</option>`;
+  });
+}
+
+function cargarDatosProducto() {
+  const id = document.getElementById("selectEditar").value;
+  if(!id) {
+    limpiarFormulario();
+    return;
+  }
+
+  const p = productos.find(item => item.id == id);
+  if(p) {
+    document.getElementById("editId").value = p.id;
+    document.getElementById("adminNombre").value = p.nombre;
+    document.getElementById("adminCat").value = p.cat;
+    document.getElementById("adminPrecio").value = p.precio;
+    document.getElementById("adminUrl").value = p.img.startsWith("data:") ? "" : p.img;
+    document.getElementById("btnGuardar").innerText = "Actualizar Producto";
+  }
+}
+
+function limpiarFormulario() {
+  document.getElementById("editId").value = "";
+  document.getElementById("adminNombre").value = "";
+  document.getElementById("adminCat").value = "";
+  document.getElementById("adminPrecio").value = "";
+  document.getElementById("adminFile").value = "";
+  document.getElementById("adminUrl").value = "";
+  document.getElementById("selectEditar").value = "";
+  document.getElementById("btnGuardar").innerText = "Guardar Producto";
+}
+
+function cerrarModalAdmin() {
+  document.getElementById("modalAdmin").style.display = "none";
+  limpiarFormulario();
+}
+
+function convertirImagenABase64(file) {
+  return new Promise((resolve) => {
+    if (!file) return resolve(null);
+    const reader = new FileReader();
+    reader.onload = (e) => resolve(e.target.result);
+    reader.onerror = () => resolve(null);
+    reader.readAsDataURL(file);
+  });
+}
+
+async function guardarProducto() {
+  const editId = document.getElementById("editId").value;
+  const nombre = document.getElementById("adminNombre").value.trim();
+  const cat = document.getElementById("adminCat").value.toLowerCase().trim();
+  const precio = parseInt(document.getElementById("adminPrecio").value);
+  const fileInput = document.getElementById("adminFile").files[0];
+  const urlInput = document.getElementById("adminUrl").value.trim();
+
+  if(!nombre || !cat || isNaN(precio)) {
+    alert("Por favor completá el Nombre, la Categoría y el Precio.");
+    return;
+  }
+
+  let imgFinal = "https://via.placeholder.com/150";
+
+  // Mantenemos la imagen anterior si estamos editando y no cambió la foto
+  if(editId) {
+    const prodExistente = productos.find(p => p.id == editId);
+    if(prodExistente) imgFinal = prodExistente.img;
+  }
+
+  if(fileInput) {
+    const base64 = await convertirImagenABase64(fileInput);
+    if(base64) imgFinal = base64;
+  } else if(urlInput !== "") {
+    imgFinal = urlInput;
+  }
+
+  let custom = JSON.parse(localStorage.getItem("mis_productos_custom")) || [];
+
+  if(editId) {
+    // Modo Edición
+    const idxCustom = custom.findIndex(p => p.id == editId);
+    if(idxCustom !== -1) {
+      custom[idxCustom] = { id: Number(editId), nombre, precio, cat, img: imgFinal };
+    }
+    const idxGlobal = productos.findIndex(p => p.id == editId);
+    if(idxGlobal !== -1) {
+      productos[idxGlobal] = { id: Number(editId), nombre, precio, cat, img: imgFinal };
+    }
+  } else {
+    // Modo Nuevo Producto
+    const nuevoProd = { id: Date.now(), nombre, precio, cat, img: imgFinal };
+    custom.push(nuevoProd);
+    productos.push(nuevoProd);
+  }
+  
+  try {
+    localStorage.setItem("mis_productos_custom", JSON.stringify(custom));
+  } catch(e) {
+    alert("La foto es demasiado pesada. Usá una más liviana o un link.");
+    return;
+  }
+
+  renderBarraCategorias();
+  filter(cat);
+  cerrarModalAdmin();
+  alert(editId ? "¡Producto actualizado!" : "¡Producto guardado!");
+}
+
+// BORRAR PRODUCTO SELECCIONADO
+function borrarProductoIndividual() {
+  const id = document.getElementById("selectEditar").value;
+  if(!id) {
+    alert("Por favor seleccioná un producto de la lista para borrar.");
+    return;
+  }
+
+  const p = productos.find(item => item.id == id);
+  const confirmar = confirm(`¿Estás seguro de borrar "${p.nombre}"?`);
+
+  if(confirmar) {
+    let custom = JSON.parse(localStorage.getItem("mis_productos_custom")) || [];
+    custom = custom.filter(item => item.id != id);
+    localStorage.setItem("mis_productos_custom", JSON.stringify(custom));
+
+    const idx = productos.findIndex(item => item.id == id);
+    if(idx !== -1) productos.splice(idx, 1);
+
+    renderBarraCategorias();
+    aplicarFiltroYOrden();
+    poblarSelectEditar();
+    limpiarFormulario();
+    alert("Producto eliminado.");
+  }
+}
+
+// BORRAR TODO DE CERO
+function borrarTodo() {
+  const confirmar = confirm("¿Estás seguro de que querés borrar TODOS los productos y categorías?");
+  if (confirmar) {
+    localStorage.removeItem("mis_productos_custom");
+    productos.length = 0;
+    actual = "todos";
+    renderBarraCategorias();
+    render([]);
+    cerrarModalAdmin();
+    alert("Se borraron todos los productos.");
+  }
+}
+
+// Inicializar la app al cargar
+window.onload = function() {
+  renderBarraCategorias();
+  aplicarFiltroYOrden();
+  actualizarContadorCarrito();
+};
+</script>
+
+</body>
+</html>
